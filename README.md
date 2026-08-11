@@ -9,7 +9,7 @@
 
 AQUILA lets an agentic AI system offload combinatorial subtasks, such as task and resource allocation across compute clusters, to a QAOA solver through a backend-agnostic quantum-classical interface, hardened with a post-quantum-secured (ML-KEM-768 / ML-DSA-65) agent messaging layer.
 
-> Companion paper (in preparation): *"AQUILA: A Scalable Quantum-Classical Interface for Optimization Offload in Agentic AI Systems"* — Sunil Gentyala, HCLTech, Dallas TX. Submitted to IEEE MCSoC 2026 (Quantum and Hybrid Classical-Quantum Computing SoCs track).
+> Companion paper (in preparation, targeting the Sept 10, 2026 deadline): *"AQUILA: A Scalable Quantum-Classical Interface for Optimization Offload in Agentic AI Systems"* — Sunil Gentyala, HCLTech, Dallas TX. To be submitted to IEEE MCSoC 2026 (Quantum and Hybrid Classical-Quantum Computing SoCs track).
 
 ---
 
@@ -88,7 +88,7 @@ If you use AQUILA in research, please cite:
   author       = {Gentyala, Sunil},
   year         = {2026},
   institution  = {HCLTech, Dallas TX},
-  note         = {Submitted to IEEE MCSoC 2026. \url{https://github.com/sunilgentyala/AQUILA}}
+  note         = {In preparation for IEEE MCSoC 2026. \url{https://github.com/sunilgentyala/AQUILA}}
 }
 ```
 

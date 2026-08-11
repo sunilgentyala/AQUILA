@@ -26,7 +26,9 @@ def box(ax, x, y, w, h, text, color, fontsize=7.2, textcolor="white"):
         linewidth=1.1, edgecolor=INK, facecolor=color,
     )
     ax.add_patch(patch)
-    ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fontsize, color=textcolor)
+    ax.text(
+        x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fontsize, color=textcolor
+    )
 
 
 def arrow(ax, x1, y1, x2, y2, label=None, label_dy=0.15):
@@ -59,7 +61,8 @@ def main() -> None:
 
     box(
         ax, 1.6, 7.3, 6.8, 1.4,
-        "Interface layer\nTaskAllocationProblem -> Ising Hamiltonian\n(EstimatorV2 / SamplerV2 protocol)",
+        "Interface layer\nTaskAllocationProblem -> Ising Hamiltonian\n"
+        "(EstimatorV2 / SamplerV2 protocol)",
         COLOR_QAOA, fontsize=6.8,
     )
     arrow(ax, 5.0, 9.5, 5.0, 8.7)
