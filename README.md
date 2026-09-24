@@ -100,7 +100,7 @@ If you use AQUILA in research, please cite:
 Lead Cybersecurity and AI Security Consultant, HCLTech, Dallas, TX, USA
 sunil.gentyala@ieee.org
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?logo=linkedin)](https://www.linkedin.com/in/sunilgentyala/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0077B5?logo=linkedin)](https://www.linkedin.com/in/sunil-gentyala/)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?logo=github)](https://github.com/sunilgentyala)
 
 ---
