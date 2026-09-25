@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: If you use this software in your research, please cite it as below.
+type: software
+title: 'AQUILA: Agentic QUantum Interface for Load Allocation'
+authors:
+- family-names: Gentyala
+  given-names: Sunil
+  affiliation: HCLTech (HCL America Inc.), Dallas, TX, USA
+  orcid: https://orcid.org/0009-0005-2642-3479
+  email: sunil.gentyala@ieee.org
+repository-code: https://github.com/sunilgentyala/AQUILA
+url: https://sunilgentyala.github.io/AQUILA/
+license: Apache-2.0
+abstract: 'Agentic QUantum Interface for Load Allocation: quantum-classical interface for
+  optimization offload in agentic AI, hardened with post-quantum-secured (ML-KEM-768/ML-DSA-65)
+  agent messaging. Companion to an IEEE MCSoC 2026 submission.'
+keywords:
+- agentic-ai
+- post-quantum-cryptography
+- qaoa
+- qiskit
+- quantum-computing
