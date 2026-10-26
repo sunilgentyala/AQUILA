@@ -1,0 +1,21 @@
+attack,trials,rejected
+bit flip in kem_ciphertext,1000,1000
+bit flip in nonce,1000,1000
+bit flip in ciphertext,1000,1000
+bit flip in signature,1000,1000
+bit flip in kem_ciphertext (same envelope),1000,1000
+bit flip in nonce (same envelope),1000,1000
+bit flip in ciphertext (same envelope),1000,1000
+bit flip in signature (same envelope),1000,1000
+altered sender_id,1000,1000
+altered recipient_id,1000,1000
+altered sequence,1000,1000
+altered timestamp,1000,1000
+altered role label,1000,1000
+wrong recipient,1000,1000
+wrong sender key,1000,1000
+role confusion (response as request),1000,1000
+exact replay of accepted envelope,1000,1000
+stale envelope (timestamp 1 hour old),1000,1000
+out-of-order (lower) sequence,1000,1000
+control: honest envelopes accepted,1000,0

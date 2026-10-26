@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AQUILA — Agentic QUantum Interface for Load Allocation</title>
+  <meta name="description" content="AQUILA lets agentic AI systems offload combinatorial task/resource-allocation subtasks to a QAOA solver through a scalable quantum-classical interface, hardened with post-quantum-secured (ML-KEM-768 / ML-DSA-65) agent messaging.">
+  <meta name="keywords" content="quantum computing, QAOA, quantum-classical interface, agentic AI, post-quantum cryptography, ML-KEM, ML-DSA, number partitioning, Qiskit, hybrid computing">
+  <meta name="author" content="Sunil Gentyala">
+  <meta property="og:title" content="AQUILA — Agentic QUantum Interface for Load Allocation">
+  <meta property="og:description" content="A scalable quantum-classical interface for optimization offload in agentic AI systems, hardened with post-quantum-secured agent messaging.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sunilgentyala.github.io/AQUILA/">
+  <meta property="og:image" content="https://opengraph.githubassets.com/1/sunilgentyala/AQUILA">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AQUILA — Agentic QUantum Interface for Load Allocation">
+  <meta name="twitter:description" content="Quantum-classical interface for optimization offload in agentic AI, hardened with post-quantum-secured messaging.">
+  <link rel="canonical" href="https://sunilgentyala.github.io/AQUILA/">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="shortcut icon" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <meta name="theme-color" content="#0d1117">
+  <meta name="color-scheme" content="dark">
+  <style>
+    :root {
+      --bg: #0d1117;
+      --surface: #161b22;
+      --border: #21262d;
+      --border-hover: #30363d;
+      --accent: #3987e5;
+      --accent2: #9085e9;
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --green: #3fb950;
+      --aqua: #26c99a;
+      --red: #f85149;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+
+    /* ── NAV ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+      background: rgba(13,17,23,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      z-index: 100;
+    }
+    .nav-brand { font-size: 1.1rem; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+    .nav-brand sup { font-size: 0.55rem; color: var(--muted); font-weight: 400; letter-spacing: 0; vertical-align: super; }
+    .nav-links { display: flex; gap: 1.5rem; font-size: 0.9rem; }
+    .nav-links a { color: var(--muted); transition: color 0.15s; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-github {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      color: var(--text) !important;
+      transition: border-color 0.15s !important;
+    }
+    .nav-github:hover { border-color: var(--accent) !important; text-decoration: none !important; }
+
+    @media (max-width: 720px) {
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero-wrap { position: relative; overflow: hidden; }
+    .hero-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(57,135,229,0.14) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 110%, rgba(38,201,154,0.09) 0%, transparent 55%);
+      pointer-events: none;
+    }
+    .hero { position: relative; text-align: center; padding: 5.5rem 2rem 3.5rem; max-width: 820px; margin: 0 auto; }
+    .badge-row { display: flex; justify-content: center; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.75rem; }
+    .badge {
+      font-size: 0.7rem; padding: 0.2rem 0.65rem; border-radius: 999px;
+      font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+    }
+    .badge-blue   { background: rgba(57,135,229,0.14);  color: var(--accent);  border: 1px solid rgba(57,135,229,0.3); }
+    .badge-violet { background: rgba(144,133,233,0.14); color: var(--accent2); border: 1px solid rgba(144,133,233,0.3); }
+    .badge-green  { background: rgba(63,185,80,0.12);   color: var(--green);   border: 1px solid rgba(63,185,80,0.25); }
+    .badge-aqua   { background: rgba(38,201,154,0.14);  color: var(--aqua);    border: 1px solid rgba(38,201,154,0.3); }
+
+    .hero h1 { font-size: clamp(2.4rem, 5.5vw, 3.8rem); font-weight: 800; letter-spacing: -0.04em; line-height: 1.08; margin-bottom: 1.25rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.25rem; line-height: 1.7; }
+    .btn-row { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.7rem 1.5rem; border-radius: 6px;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s, box-shadow 0.15s;
+    }
+    .btn:hover { opacity: 0.9; transform: translateY(-1px); text-decoration: none; }
+    .btn-primary { background: var(--accent); color: #0d1117; box-shadow: 0 0 20px rgba(57,135,229,0.25); }
+    .btn-primary:hover { box-shadow: 0 0 32px rgba(57,135,229,0.4); }
+    .btn-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-outline:hover { border-color: var(--border-hover); }
+
+    .companion-note {
+      margin: 2.5rem auto 0; max-width: 640px;
+      font-size: 0.85rem; color: var(--muted);
+      border-left: 2px solid var(--accent2);
+      padding: 0.6rem 1rem; text-align: left;
+      background: rgba(144,133,233,0.05);
+      border-radius: 0 6px 6px 0;
+    }
+    .companion-note em { color: var(--text); font-style: normal; font-weight: 600; }
+
+    /* ── STATS ── */
+    .stats { display: flex; justify-content: center; gap: 3.5rem; padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+    .stat-num { font-size: 2.6rem; font-weight: 800; color: var(--accent); letter-spacing: -0.04em; line-height: 1; }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem; max-width: 160px; }
+
+    /* ── SECTION ── */
+    section { max-width: 1080px; margin: 0 auto; padding: 3.5rem 2rem; }
+    .section-label { font-size: 0.72rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 0.5rem; }
+    h2 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 0.6rem; }
+    .section-sub { color: var(--muted); margin-bottom: 2.5rem; max-width: 620px; line-height: 1.65; }
+
+    /* ── ARCHITECTURE ── */
+    .arch-wrap { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+    @media (min-width: 860px) { .arch-wrap { grid-template-columns: 340px 1fr; } }
+    .arch-figure { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1rem; }
+    .arch-figure img { border-radius: 6px; }
+    .layer-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .layer {
+      display: flex; gap: 1rem; align-items: flex-start;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1.1rem 1.25rem; transition: border-color 0.15s;
+    }
+    .layer:hover { border-color: var(--border-hover); }
+    .layer-dot { min-width: 10px; height: 10px; border-radius: 50%; margin-top: 0.4rem; flex-shrink: 0; }
+    .layer h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .layer p { font-size: 0.82rem; color: var(--muted); line-height: 1.55; }
+    .layer code { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.78rem; color: var(--accent2); }
+
+    /* ── RESULTS GRID ── */
+    .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
+    .result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; transition: border-color 0.15s; }
+    .result-card:hover { border-color: var(--border-hover); }
+    .result-card img { width: 100%; background: #fcfcfb; }
+    .result-caption { padding: 1rem 1.25rem; font-size: 0.83rem; color: var(--muted); line-height: 1.55; }
+    .result-caption strong { color: var(--text); }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin-top: 1rem; }
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    th, td { padding: 0.7rem 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 600; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    td:first-child { font-weight: 600; color: var(--text); }
+    tr:hover td { background: rgba(255,255,255,0.015); }
+    .num { font-variant-numeric: tabular-nums; }
+
+    /* ── INSTALL ── */
+    .install-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+    .install-header { padding: 0.75rem 1rem; font-size: 0.85rem; font-weight: 700; border-bottom: 1px solid var(--border); }
+    .install-card pre {
+      padding: 1rem 1.25rem; overflow-x: auto;
+      font-family: 'SF Mono', 'Fira Code', 'Fira Mono', monospace;
+      font-size: 0.83rem; color: var(--accent2); line-height: 1.7;
+    }
+    .install-card pre .comment { color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    .footer-author { font-size: 0.9rem; color: var(--text); font-weight: 600; margin-bottom: 0.25rem; }
+    .footer-affil { font-size: 0.82rem; color: var(--muted); margin-bottom: 1rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; font-size: 0.85rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+    .footer-legal { font-size: 0.75rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">AQUILA<sup>quantum</sup></div>
+  <div class="nav-links">
+    <a href="#architecture">Architecture</a>
+    <a href="#results">Results</a>
+    <a href="#security">Security</a>
+    <a href="#install">Install</a>
+  </div>
+  <a class="nav-github" href="https://github.com/sunilgentyala/AQUILA" target="_blank" rel="noopener">GitHub &#8599;</a>
+</nav>
+
+<div class="hero-wrap">
+  <div class="hero">
+    <div class="badge-row">
+      <span class="badge badge-blue">Python 3.12+</span>
+      <span class="badge badge-violet">Qiskit / Aer</span>
+      <span class="badge badge-green">Apache-2.0</span>
+      <span class="badge badge-aqua">v0.2 controlled evaluation</span>
+    </div>
+    <h1>Agentic <span>QU</span>antum Interface<br>for Load <span>A</span>llocation</h1>
+    <p class="hero-sub">AQUILA lets agentic AI systems offload combinatorial task and resource-allocation subtasks to a multi-restart QAOA solver through a scalable, backend-agnostic quantum-classical interface &mdash; hardened with a real post-quantum-secured (ML-KEM-768 / ML-DSA-65) agent messaging layer.</p>
+    <div class="btn-row">
+      <a class="btn btn-primary" href="https://github.com/sunilgentyala/AQUILA" target="_blank" rel="noopener">View on GitHub</a>
+      <a class="btn btn-outline" href="#results">See the results</a>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div><div class="stat-num">30</div><div class="stat-label">Instances per size, two weight families</div></div>
+  <div><div class="stat-num">&asymp;</div><div class="stat-label">QAOA matches uniform sampling at equal budget</div></div>
+  <div><div class="stat-num">40</div><div class="stat-label">Passing tests, 4 layers</div></div>
+  <div><div class="stat-num">2</div><div class="stat-label">Backends: all-to-all and heavy-hex</div></div>
+</div>
+
+<section id="architecture">
+  <div class="section-label">Architecture</div>
+  <h2>Three layers, one boundary that scales</h2>
+  <p class="section-sub">The interface layer talks to backends purely through Qiskit's <code>EstimatorV2</code>/<code>SamplerV2</code> primitive protocol. Nothing above that boundary refers to the simulator directly &mdash; a hardware-backed primitive implementation would satisfy the interface without changing the optimizer or agent code.</p>
+  <div class="arch-wrap">
+    <div class="arch-figure">
+      <img src="assets/architecture.png" alt="AQUILA architecture: requester agent, solver agent with security, interface, optimizer and backend layers">
+    </div>
+    <div class="layer-list">
+      <div class="layer">
+        <div class="layer-dot" style="background: #4a3aa7;"></div>
+        <div>
+          <h4>Security layer</h4>
+          <p>Pairwise post-quantum-secured channel: ML-KEM-768 encapsulation + AES-256-GCM + ML-DSA-65 signature, verify-then-decrypt ordering. Verified against wrong-recipient, tampering, and impersonation attacks.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-dot" style="background: var(--accent);"></div>
+        <div>
+          <h4>Interface layer</h4>
+          <p><code>TaskAllocationProblem</code> &rarr; Ising Hamiltonian, dispatched to any backend exposing <code>estimator()</code>/<code>sampler()</code>. Aer simulator today; real QPU later, no API change.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-dot" style="background: var(--accent);"></div>
+        <div>
+          <h4>Optimizer layer</h4>
+          <p>Multi-restart QAOA (COBYLA outer loop) with full-distribution post-selection, benchmarked against greedy (LPT) and multi-restart simulated-annealing baselines.</p>
+        </div>
+      </div>
+      <div class="layer">
+        <div class="layer-dot" style="background: var(--aqua);"></div>
+        <div>
+          <h4>Backend (pluggable)</h4>
+          <p>Aer statevector simulator, with an optional depolarizing noise model for studying solution-quality degradation under simulated NISQ-era hardware.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="section-label">Evaluation</div>
+  <h2>Real results, honestly reported</h2>
+  <p class="section-sub">Every number below comes from the evaluation harness in <a href="https://github.com/sunilgentyala/AQUILA/tree/main/evaluation" target="_blank" rel="noopener"><code>evaluation/</code></a> &mdash; reproducible, with results and figures checked into the repo.</p>
+
+  <div class="results-grid">
+    <div class="result-card">
+      <img src="assets/fig_quality.png" alt="Exact-optimum success rate vs. problem size for QAOA, controls and classical baselines">
+      <div class="result-caption"><strong>Solution quality.</strong> Exact-optimum success rate with Wilson 95% intervals, 30 instances per point, equal sample budgets (3 &times; 1,024). QAOA is statistically indistinguishable from uniform random sampling and from the same circuit with random parameters (paired exact tests, all p &ge; 0.58). Tuned simulated annealing, Karmarkar-Karp and greedy LPT fall behind on real-valued weights.</div>
+    </div>
+    <div class="result-card">
+      <img src="assets/fig_runtime.png" alt="Mean wall-clock time vs. problem size, log scale">
+      <div class="result-caption"><strong>Runtime.</strong> Exact enumeration and subset-sum dynamic programming solve every tested size in well under 0.1 s, two to four orders of magnitude faster than QAOA on the simulator. Simulation time says nothing about how a QPU-backed deployment would scale.</div>
+    </div>
+    <div class="result-card">
+      <img src="assets/fig_security.png" alt="Per-message time and wire size, PQC vs. classical baselines">
+      <div class="result-caption"><strong>Security overhead.</strong> The PQC envelope seals in about 0.5 ms and opens in about 0.17 ms, between P-256 and RSA-3072 on the open side, but a 512-byte payload becomes 5,007 bytes on the wire against roughly 1.2&ndash;1.3 KB for classical baselines, mostly the 3,309-byte signature. P-256 is the fastest option per message.</div>
+    </div>
+    <div class="result-card">
+      <img src="assets/fig_noise.png" alt="Noise study: expectation ratio, optimal-probability enrichment and success vs. shot budget">
+      <div class="result-caption"><strong>Noise study.</strong> The Hamiltonian expectation ratio collapses toward 0 as depolarizing error rises to 5%. Optimal-probability enrichment over uniform stays near 1 at every noise level, including none, so best-of-samples success reflects sampling, not circuit quality. At small shot budgets under noise, QAOA is modestly ahead of uniform sampling on 8 instances per size; this is suggestive, not conclusive.</div>
+    </div>
+  </div>
+</section>
+
+<section id="security">
+  <div class="section-label">Security</div>
+  <h2>ML-KEM-768 / ML-DSA-65, measured</h2>
+  <p class="section-sub">Mean of 300 trials on an idle CPU, 512-byte payload. PQC parameter sets are NIST category 3; the classical baselines are shown at the 128-bit level (RSA-3072, P-256) and the 192-bit level (P-384). Envelopes bind sender, recipient, role, sequence number and timestamp, with replay and freshness checks.</p>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Metric</th><th>ML-KEM-768 + ML-DSA-65</th><th>P-256 (128-bit)</th><th>RSA-3072 (128-bit)</th><th>P-384 (192-bit)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Seal</td><td class="num">0.50 ms</td><td class="num">0.08 ms</td><td class="num">0.62 ms</td><td class="num">1.70 ms</td></tr>
+        <tr><td>Open</td><td class="num">0.17 ms</td><td class="num">0.10 ms</td><td class="num">0.62 ms</td><td class="num">1.05 ms</td></tr>
+        <tr><td>Identity keygen (once)</td><td class="num">0.26 ms</td><td class="num">0.01 ms</td><td class="num">99.8 ms</td><td class="num">0.54 ms</td></tr>
+        <tr><td>Public keys</td><td class="num">3,136 B (1,184 KEM + 1,952 DSA)</td><td class="num">182 B</td><td class="num">422 B</td><td class="num">240 B</td></tr>
+        <tr><td>Wire size, 512 B payload</td><td class="num">5,007 B</td><td class="num">1,204 B</td><td class="num">1,308 B</td><td class="num">1,269 B</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="install">
+  <div class="section-label">Get started</div>
+  <h2>Install and run</h2>
+  <div class="install-card">
+    <div class="install-header">Install</div>
+    <pre>pip install -e ".[dev]"</pre>
+  </div>
+  <div class="install-card">
+    <div class="install-header">Run the end-to-end demo</div>
+    <pre>python examples/demo_end_to_end.py<br><span class="comment"># requester agent -> QAOA solve -> PQC-secured response, full cycle</span></pre>
+  </div>
+  <div class="install-card">
+    <div class="install-header">Test and reproduce results</div>
+    <pre>pytest tests/                          <span class="comment"># 40 tests across all four layers</span><br>python evaluation/quality_controls.py  <span class="comment"># reproduce the controlled quality sweep</span><br>python evaluation/analyze.py           <span class="comment"># regenerate figures</span></pre>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-author">Sunil Gentyala &mdash; IEEE Senior Member</div>
+  <div class="footer-affil">Lead Cybersecurity and AI Security Consultant, HCLTech, Dallas, TX, USA</div>
+  <div class="footer-links">
+    <a href="https://github.com/sunilgentyala/AQUILA" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/sunil-gentyala/" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:sunil.gentyala@ieee.org">Contact</a>
+  </div>
+  <div class="footer-legal">Apache-2.0 License &copy; 2026 Sunil Gentyala</div>
+</footer>
+
+</body>
+</html>
