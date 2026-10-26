@@ -3,7 +3,7 @@
 [![AQUILA CI](https://github.com/sunilgentyala/AQUILA/actions/workflows/ci.yaml/badge.svg)](https://github.com/sunilgentyala/AQUILA/actions/workflows/ci.yaml)
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-orange)](https://github.com/sunilgentyala/AQUILA/releases)
+[![Version](https://img.shields.io/badge/version-0.2.0-orange)](https://github.com/sunilgentyala/AQUILA/releases)
 
 **Agentic QUantum Interface for Load Allocation.**
 

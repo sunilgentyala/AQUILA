@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "aquila-quantum"
-version = "0.1.0"
+version = "0.2.0"
 description = "Agentic QUantum Interface for Load Allocation - a scalable quantum-classical interface for offloading agentic AI optimization workloads to QAOA, with post-quantum-secured agent messaging"
 readme = "README.md"
 license = { text = "Apache-2.0" }
