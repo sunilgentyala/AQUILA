@@ -9,7 +9,7 @@ re-sample at several shot budgets and record:
   - expectation ratio: best <H> under noise / noiseless best <H> on the same
     instance (a Hamiltonian expectation ratio, not a state fidelity)
 
-Run with: python evaluation/noise_controls.py [--instances 8]
+Run with: python evaluation/noise_controls.py [--instances 30]
 """
 
 from __future__ import annotations
@@ -83,7 +83,7 @@ def run_one(args: tuple[int, int, float]) -> list[dict]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--instances", type=int, default=8)
+    ap.add_argument("--instances", type=int, default=30)
     ap.add_argument("--workers", type=int, default=5)
     a = ap.parse_args()
     jobs = [(n, k, r) for n in SIZES for k in range(a.instances) for r in RATES]

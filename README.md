@@ -3,7 +3,7 @@
 [![AQUILA CI](https://github.com/sunilgentyala/AQUILA/actions/workflows/ci.yaml/badge.svg)](https://github.com/sunilgentyala/AQUILA/actions/workflows/ci.yaml)
 [![Python](https://img.shields.io/badge/python-3.12%2B-blue)](https://www.python.org/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-green.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.2.0-orange)](https://github.com/sunilgentyala/AQUILA/releases)
+[![Version](https://img.shields.io/badge/version-0.2.1-orange)](https://github.com/sunilgentyala/AQUILA/releases)
 
 **Agentic QUantum Interface for Load Allocation.**
 
@@ -40,6 +40,8 @@ Exact-optimum success rate, real-valued weights in [1, 20]:
 **Change notes (v0.2).** Earlier versions of this README reported a mean approximation ratio `C_opt / C_found` and described classical baselines as collapsing. With real-valued weights the optimal cost is often near zero, so that ratio drops toward zero for any method that is not exact; it overstated the gap, and results are now reported as exact-optimum success rates. Earlier versions also stated 4,096 sampling shots when the sampler ran 1,024, and described RSA-3072/ECDSA-P256 as matched-strength to ML-KEM-768/ML-DSA-65 (they are not; the PQC sets are NIST category 3). All three are fixed here.
 
 **Security layer (v0.2).** Envelopes now sign and authenticate sender, recipient, message role, sequence number and timestamp, with receiver-side replay and freshness protection. A 512-byte payload becomes a 5,007-byte envelope (1,088-byte KEM ciphertext, 3,309-byte signature, 98 bytes of header, nonce and tag). Timing comparisons against 128-bit and 192-bit classical baselines are in [`evaluation/results/security_overhead_v2.csv`](evaluation/results/security_overhead_v2.csv).
+
+**Noise study (v0.2.1).** The noise study now uses 30 instances per size (n = 6, 8, 10), five depolarizing error rates and shot budgets from 64 to 4,096. Under noise the Hamiltonian expectation collapses (0.6% to 3.4% of its noiseless value at 5% error), and QAOA is statistically indistinguishable from uniform sampling at every shot budget. An earlier 8-instance run suggested a small-budget advantage that did not replicate. Data: [`evaluation/results/noise_controls.csv`](evaluation/results/noise_controls.csv).
 
 **Backend portability.** A second backend (`HeavyHexBackend`: heavy-hex lattice, {rz, sx, x, cx} basis) runs the same optimizer unchanged and returned identical best costs on all tested instances. Routing costs about 3x the depth and 2x the two-qubit gates (n = 14: depth 177 vs 57, 546 vs 273 two-qubit gates). All execution is still on simulators.
 
