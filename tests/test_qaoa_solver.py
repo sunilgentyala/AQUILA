@@ -41,3 +41,29 @@ def test_solve_qaoa_result_cost_matches_recomputation():
     result = solve_qaoa(problem, backend, reps=2, maxiter=80, seed=3)
 
     assert result.best_cost == pytest.approx(problem.cost_of_assignment(result.best_spins))
+
+
+def test_cost_scale_matches_enumerated_std() -> None:
+    import itertools
+
+    import numpy as np
+
+    from aquila.optimizer.qaoa_solver import cost_scale
+
+    w = [3.0, 7.5, 1.25, 9.0, 4.0]
+    prob = TaskAllocationProblem(task_weights=w)
+    energies = [
+        sum(2 * w[i] * w[j] * s[i] * s[j] for i in range(5) for j in range(i + 1, 5))
+        for s in itertools.product((-1, 1), repeat=5)
+    ]
+    assert abs(float(np.std(energies)) - cost_scale(prob)) < 1e-9
+
+
+def test_normalized_operator_has_unit_scale_and_same_argmin() -> None:
+    from aquila.optimizer.qaoa_solver import build_cost_operator, cost_scale
+
+    prob = TaskAllocationProblem(task_weights=[2.0, 5.0, 3.0, 8.0])
+    raw = build_cost_operator(prob)
+    norm = build_cost_operator(prob, normalize=True)
+    assert abs(float((norm.coeffs.real**2).sum()) - 1.0) < 1e-9
+    assert abs(raw.coeffs.real[0] / norm.coeffs.real[0] - cost_scale(prob)) < 1e-9

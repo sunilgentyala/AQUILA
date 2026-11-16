@@ -31,10 +31,26 @@ class QAOAResult:
     total_shots: int = 0
 
 
-def build_cost_operator(problem: TaskAllocationProblem) -> SparsePauliOp:
-    """Build the Ising cost Hamiltonian sum_{i<j} J_ij Z_i Z_j as a SparsePauliOp."""
+def cost_scale(problem: TaskAllocationProblem) -> float:
+    """Standard deviation of the Ising energy over uniformly random assignments.
+
+    The terms Z_i Z_j are orthonormal under the uniform distribution, so the
+    variance is exactly sum_{i<j} J_ij^2 and no enumeration is needed.
+    """
+    return float(sum(v * v for v in problem.ising_coefficients().values()) ** 0.5)
+
+
+def build_cost_operator(problem: TaskAllocationProblem, normalize: bool = False) -> SparsePauliOp:
+    """Build the Ising cost Hamiltonian sum_{i<j} J_ij Z_i Z_j as a SparsePauliOp.
+
+    With ``normalize=True`` the operator is divided by ``cost_scale(problem)`` so that
+    the QAOA angle gamma acts on a unit-scale spectrum. The argmin is unchanged.
+    """
     n = problem.num_tasks
     coefficients = problem.ising_coefficients()
+    if normalize:
+        scale = cost_scale(problem)
+        coefficients = {k: v / scale for k, v in coefficients.items()}
     paulis: list[str] = []
     coeffs: list[float] = []
     for (i, j), value in coefficients.items():
@@ -54,8 +70,13 @@ def solve_qaoa(
     maxiter: int = 150,
     num_restarts: int = 3,
     seed: int | None = None,
+    normalize: bool = False,
 ) -> QAOAResult:
     """Solve a task-allocation problem via QAOA and return the best assignment found.
+
+    ``normalize`` rescales the cost Hamiltonian to unit spectral standard deviation
+    (see ``cost_scale``). It defaults to False to reproduce the v0.2 results; the
+    extension study shows it is needed for the optimizer to train at weights up to 20.
 
     QAOA's classical outer loop is sensitive to parameter initialization,
     especially as qubit count grows, so `num_restarts` independent
@@ -63,7 +84,7 @@ def solve_qaoa(
     performed and the best result across all of them is kept - the same
     principle used for the simulated-annealing baseline.
     """
-    cost_operator = build_cost_operator(problem)
+    cost_operator = build_cost_operator(problem, normalize=normalize)
     ansatz = QAOAAnsatz(cost_operator=cost_operator, reps=reps)
 
     transpiled_ansatz = backend.transpile(ansatz)
@@ -114,11 +135,12 @@ def sample_unoptimized(
     reps: int = 3,
     num_restarts: int = 3,
     seed: int | None = None,
+    normalize: bool = False,
 ) -> QAOAResult:
     """Control: run the same QAOA circuit at random (unoptimized) parameters
     with the same total sampling budget, so the value added by the classical
     optimization loop can be isolated."""
-    cost_operator = build_cost_operator(problem)
+    cost_operator = build_cost_operator(problem, normalize=normalize)
     ansatz = QAOAAnsatz(cost_operator=cost_operator, reps=reps)
     transpiled = backend.transpile(ansatz)
     sampling_circuit = transpiled.copy()
